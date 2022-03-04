@@ -10,6 +10,8 @@ import api.base
 import config
 import update
 
+import services.translate
+
 logger = logging.getLogger(__name__)
 
 EMOTICON_UPLOAD_PATH = os.path.join(config.DATA_PATH, 'emoticons')
@@ -76,3 +78,13 @@ class UploadEmoticonHandler(api.base.ApiHandler):  # noqa
         os.replace(tmp_path, path)
 
         return f'{EMOTICON_BASE_URL}/{filename}'
+
+
+class TranslateHandler(api.base.ApiHandler):  # noqa
+    async def get(self):
+        source_text = self.get_argument("q", "", True)
+        translation = await services.translate.translate(source_text)
+        if translation is None:
+            translation = ""
+
+        self.write({'translation': translation})

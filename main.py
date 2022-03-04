@@ -27,6 +27,8 @@ routes = [
     (r'/api/room_info', api.chat.RoomInfoHandler),
     (r'/api/avatar_url', api.chat.AvatarHandler),
 
+    (r'/api/translate', api.main.TranslateHandler),
+
     (rf'{api.main.EMOTICON_BASE_URL}/(.*)', tornado.web.StaticFileHandler, {'path': api.main.EMOTICON_UPLOAD_PATH}),
     (r'/(.*)', api.main.MainHandler, {'path': config.WEB_ROOT, 'default_filename': 'index.html'})
 ]
